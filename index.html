@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCANLINE — Pump.fun Terminal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <span class="brand-name">SCANLINE</span>
+      <span class="brand-sub">pump.fun terminal · local build</span>
+    </div>
+    <div class="status-cluster">
+      <div class="stat">
+        <span class="stat-label">tokens seen</span>
+        <span class="stat-value" id="statSeen">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">trades / min</span>
+        <span class="stat-value" id="statTradeRate">0</span>
+      </div>
+      <div class="conn" id="connStatus" data-state="connecting">
+        <span class="conn-dot"></span>
+        <span class="conn-label">connecting</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="disclaimer" role="note">
+    <strong>Not financial advice.</strong> The scores below are heuristics built from live, incomplete on-chain data —
+    not predictions. Most pump.fun tokens go to zero. Nothing here should be your only reason to buy or sell.
+  </div>
+
+  <main class="layout">
+
+    <!-- LEFT: live feed -->
+    <section class="panel feed-panel">
+      <div class="panel-head">
+        <h2>Live feed</h2>
+        <div class="feed-controls">
+          <input type="search" id="searchBox" placeholder="filter by name / symbol / mint…" autocomplete="off">
+          <select id="sortSelect">
+            <option value="new">Newest</option>
+            <option value="score">Highest score</option>
+            <option value="volume">Highest volume</option>
+            <option value="risk">Highest risk</option>
+          </select>
+        </div>
+      </div>
+      <div class="feed-list" id="feedList">
+        <div class="feed-empty" id="feedEmpty">Waiting for tokens from the socket…</div>
+      </div>
+    </section>
+
+    <!-- RIGHT: detail + score breakdown -->
+    <section class="panel detail-panel" id="detailPanel">
+      <div class="detail-empty">
+        <p>Select a token from the feed to see its full breakdown.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footlog">
+    <div class="footlog-head">
+      <span>event log</span>
+      <label class="debug-toggle">
+        <input type="checkbox" id="rawToggle">
+        show raw payloads
+      </label>
+      <button id="clearLog" class="ghost-btn">clear</button>
+    </div>
+    <div class="footlog-body" id="logBody"></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
