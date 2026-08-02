@@ -371,7 +371,6 @@ function buildFlags(t, f) {
 // ---------------------------------------------------------
 function renderFeed() {
   const list = document.getElementById("feedList");
-  const empty = document.getElementById("feedEmpty");
   let mints = [...state.order];
 
   if (state.filter) {
@@ -388,8 +387,15 @@ function renderFeed() {
   else if (state.sort === "risk") arr.sort((a, b) => a.compositeScore - b.compositeScore);
   // "new" keeps insertion order already
 
-  empty.style.display = arr.length ? "none" : "block";
   list.innerHTML = "";
+  if (!arr.length) {
+    const empty = document.createElement("div");
+    empty.className = "feed-empty";
+    empty.id = "feedEmpty";
+    empty.textContent = state.order.length ? "No tokens match your filter." : "Waiting for tokens from the socket…";
+    list.appendChild(empty);
+    return;
+  }
   for (const t of arr) list.appendChild(feedItemEl(t));
 }
 
